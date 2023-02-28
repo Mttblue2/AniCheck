@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,34 +12,20 @@ import com.google.gson.reflect.TypeToken;
 
 import dev.katsute.mal4j.MyAnimeList;
 import dev.katsute.mal4j.anime.Anime;
-import dev.katsute.mal4j.anime.AnimePreview;
 import dev.katsute.mal4j.anime.RelatedAnime;
 
 public class AnimeCheck
 {
-	static MyAnimeList mal = MyAnimeList.withClientID("");
+	static MyAnimeList mal;
 
-	public static void main(String[] args) throws IOException, NoSuchFieldException, SecurityException
+	public AnimeCheck(String ClientID)
 	{
-		//PaginatedIterator<AnimePreview> sword = mal.getAnime().withQuery("Fate").searchAll();
-		/*List<AnimePreview> title = mal.getAnime().withQuery("Bocchi the Rock!").search();
-		
-		for(int x = 0; x < title.size(); x++)
-			System.out.println(title.get(x).getTitle());*/
-		
-		List<Anime> series = getSeries(47917, "a");
-		File file = new File("D:\\Users\\Tater\\Desktop\\temp.ani");
-		
-		Anime anime = mal.getAnime(38790);
-		Gson gson = new Gson();
-		Type animeType = new TypeToken<Anime>() {}.getType();
-
-
+		mal = MyAnimeList.withClientID(ClientID);
 	}
 	
 	//This goes through MAL related anime getting all listing for a series
 	//"a" is abridged. Gets all main anime. Otherwise it gets all character appearances in other media
-	private static List<Anime> getSeries(long id, String s)
+	public List<Anime> getSeries(long id, String s)
 	{
 		List<Anime> AP = new ArrayList<Anime>();
 		AP.add(mal.getAnime(id));
