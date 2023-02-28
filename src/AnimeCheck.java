@@ -1,15 +1,12 @@
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
+import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.MyAnimeList;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.RelatedAnime;
@@ -22,9 +19,10 @@ public class AnimeCheck
 	{
 		mal = MyAnimeList.withClientID(ClientID);
 	}
-	
-	//This goes through MAL related anime getting all listing for a series
-	//"a" is abridged. Gets all main anime. Otherwise it gets all character appearances in other media
+
+	// This goes through MAL related anime getting all listing for a series
+	// "a" is abridged. Gets all main anime. Otherwise it gets all character
+	// appearances in other media
 	public List<Anime> getSeries(long id, String s)
 	{
 		List<Anime> AP = new ArrayList<Anime>();
@@ -42,24 +40,41 @@ public class AnimeCheck
 					if (s.equals("a"))
 					{
 						if (related[x].getRelationTypeFormat().equals("Character"))
-								;
+							;
 						else
 							AP.add(mal.getAnime(related[x].getID()));
-					}
-					else
+					} else
 						AP.add(mal.getAnime(related[x].getID()));
 				}
 			}
 
 		}
-		
-		
+
 		AP.sort(Comparator.comparing(Anime::getID));
-		
+
 		return AP;
 	}
-	
-	//goes through list and checks if an anime is already in the list
+
+	// writes List to a specific file in JSON using GSON.
+	// currently working on
+	public void saveObject(Anime series, File file)
+	{
+
+		try
+		{
+			FileWriter writer = new FileWriter(file);
+			Gson gson = new Gson();
+
+			writer.write(gson.toJson(getSchema(series.getID())));
+
+			writer.close();
+		} catch (Exception e)
+		{
+			System.err.println(e);
+		}
+	}
+
+	// goes through list and checks if an anime is already in the list
 	private static boolean containsID(List<Anime> anime, Long id)
 	{
 		for (int x = 0; x < anime.size(); x++)
@@ -70,27 +85,11 @@ public class AnimeCheck
 
 		return false;
 	}
-	
-	//writes List to a specific file in JSON using GSON.
-	//currently working on
-	private static void saveObject(Anime series, File file)
+
+	// gets JsonObject schema from Mal4J
+	private JsonObject getSchema(long id)
 	{
-		
-		try
-		{
-			FileWriter writer = new FileWriter(file);
-			//Type animeType = new TypeToken<Anime>(){}.getType();
-			Gson gson = new Gson();
-			
-			
-			writer.write(gson.toJson(series));
-			
-			writer.close();
-		}
-		catch(Exception e)
-		{
-			System.err.println(e);
-		}
+		return mal.getAnimeSchema(id);
 	}
 
 }

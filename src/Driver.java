@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+
 import dev.katsute.mal4j.anime.Anime;
 
 public class Driver
@@ -11,25 +13,22 @@ public class Driver
 	public static void main(String[] args)
 	{
 		//PaginatedIterator<AnimePreview> sword = mal.getAnime().withQuery("Fate").searchAll();
-		/*List<AnimePreview> title = mal.getAnime().withQuery("Bocchi the Rock!").search();
-				
-				
+		/*List<AnimePreview> title = mal.getAnime().withQuery("Bocchi the Rock!").search();*/				
+		
+		File key = new File("MAL_key.txt");
 		File file = new File("D:\\Users\\Tater\\Desktop\\temp.ani");
-				
-				
-		Anime anime = mal.getAnime(48417);
-		Gson gson = new Gson();
-		TypeToken animeType = new TypeToken<Anime>() {};*/
 		
-		File file = new File("MAL_key.txt");
-		
-		AnimeCheck aniCheck = new AnimeCheck(getKey(file));
+		AnimeCheck aniCheck = new AnimeCheck(getKey(key));
 		
 		List<Anime> series = aniCheck.getSeries(47917, "a");
 		
 		for (Anime anime: series)
-			System.out.println(anime.getTitle());
-				
+			System.out.println(anime.getTitle() + ": " + anime.getID());
+		
+		aniCheck.saveObject(series.get(0), file);
+		
+		//aniCheck.getSchema(47917);
+		
 
 	}
 	
