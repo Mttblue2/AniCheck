@@ -57,7 +57,7 @@ public class AnimeCheck
 
 	// writes List to a specific file in JSON using GSON.
 	// currently working on
-	public void saveObject(Anime series, File file)
+	public void saveSeries(List<Anime> series, File file)
 	{
 
 		try
@@ -65,7 +65,11 @@ public class AnimeCheck
 			FileWriter writer = new FileWriter(file);
 			Gson gson = new Gson();
 
-			writer.write(gson.toJson(getSchema(series.getID())));
+			for (Anime anime : series)
+			{
+				writer.write(anime.getTitle() + "\n");
+				writer.write(gson.toJson(getSchema(anime.getID())) + "\n");
+			}
 
 			writer.close();
 		} catch (Exception e)

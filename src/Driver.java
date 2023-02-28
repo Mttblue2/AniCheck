@@ -20,12 +20,12 @@ public class Driver
 		
 		AnimeCheck aniCheck = new AnimeCheck(getKey(key));
 		
-		List<Anime> series = aniCheck.getSeries(47917, "a");
+		List<Anime> series = aniCheck.getSeries(51535, "a");
 		
 		for (Anime anime: series)
 			System.out.println(anime.getTitle() + ": " + anime.getID());
 		
-		aniCheck.saveObject(series.get(0), file);
+		aniCheck.saveSeries(series, file);
 		
 		//aniCheck.getSchema(47917);
 		
