@@ -1,11 +1,15 @@
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import dev.katsute.mal4j.Json;
 import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.MyAnimeList;
 import dev.katsute.mal4j.anime.Anime;
@@ -56,7 +60,6 @@ public class AnimeCheck
 	}
 
 	// writes List to a specific file in JSON using GSON.
-	// currently working on
 	public void saveSeries(List<Anime> series, File file)
 	{
 
@@ -64,10 +67,9 @@ public class AnimeCheck
 		{
 			FileWriter writer = new FileWriter(file);
 			Gson gson = new Gson();
-
+			
 			for (Anime anime : series)
 			{
-				writer.write(anime.getTitle() + "\n");
 				writer.write(gson.toJson(getSchema(anime.getID())) + "\n");
 			}
 
@@ -76,6 +78,30 @@ public class AnimeCheck
 		{
 			System.err.println(e);
 		}
+	}
+
+	// reads a local file, translated the lines back into JsonObject and returns
+	// anime arraylist based on those
+	public List<Anime> loadSeries(File file)
+	{
+		List<Anime> series = new ArrayList<Anime>();
+		Gson gson = new Gson();
+		
+		try
+		{
+			Scanner scan = new Scanner(file);
+			Type object = new TypeToken<JsonObject>(){}.getType();
+			
+			while (scan.hasNextLine())
+				series.add(mal.getAnime(gson.fromJson(scan.nextLine(), object)));
+			
+			scan.close();
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		
+		return series;
 	}
 
 	// goes through list and checks if an anime is already in the list
