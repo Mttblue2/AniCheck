@@ -1,6 +1,6 @@
-# AnimeCheck
+# AniCheck
 
-AnimeCheck<sub>name pending</sub> is a program to check my local video files and compare them to the MyAnimeList.net database.
+AniCheck<sub>name pending</sub> is a program to check my local video files and compare them to the MyAnimeList.net database.
 
 
 ## Requirements
