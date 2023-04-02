@@ -13,7 +13,6 @@ public class Driver
 	{
 		//PaginatedIterator<AnimePreview> sword = mal.getAnime().withQuery("Fate").searchAll();
 		//List<AnimePreview> title = mal.getAnime().withQuery("Bocchi the Rock!").search();
-		//aniCheck.saveSeries(series, file);
 		
 		File key = new File("MAL_key.txt");
 		File file = new File("D:\\Users\\Tater\\Desktop\\temp.ani");
@@ -22,9 +21,9 @@ public class Driver
 		
 		List<Anime> series = new ArrayList<Anime>();
 		
-		series = aniCheck.getSeries(51535, "a");
+		series = aniCheck.getSeries(10087, false, file);
 		
-		aniCheck.saveSeries(series, file);
+		//aniCheck.saveSeries(series, file);
 		
 		//series = aniCheck.loadSeries(file);
 		
