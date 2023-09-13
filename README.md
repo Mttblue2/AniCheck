@@ -6,7 +6,7 @@ AniCheck<sub>name pending</sub> is a program to check my local video files and c
 ## Requirements
 
 [My fork of MyAnimeList for Java](https://github.com/Mttblue2/Mal4J)
-<sub>Currently based off of [Mal4J 3.0.2](https://github.com/KatsuteDev/Mal4J) with a few additions for AnimeCheck</sub>
+<sub>Currently based off of [Mal4J 3.4.0](https://github.com/KatsuteDev/Mal4J) with a few additions for AnimeCheck</sub>
 
 JSON and GSON
 
